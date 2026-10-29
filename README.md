@@ -1,4 +1,4 @@
-# Lab 2: Country Schools — Anomaly Detection and Cluster Analysis
+# Lab 2: Country Schools: Anomaly Detection and Cluster Analysis
 
 ## Lab Description
 This lab explores basic data preprocessing, anomaly detection, and cluster analysis using the Country Schools dataset. The aim is to identify unusual records and group counties according to their school installation patterns.
