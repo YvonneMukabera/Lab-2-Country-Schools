@@ -1,51 +1,78 @@
-# Lab 2: Country Schools: Anomaly Detection and Cluster Analysis
+# Lab 2: Country Schools Data Analysis
 
 ## Lab Description
-This lab explores basic data preprocessing, anomaly detection, and cluster analysis using the Country Schools dataset. The aim is to identify unusual records and group counties according to their school installation patterns.
+
+This lab explores data preprocessing, anomaly detection, and cluster analysis using the Country Schools dataset. The aim is to identify unusual records and group counties according to their school installation patterns.
 
 ## Dataset
-The dataset contains information about the number of schools, installed and pending schools, installation percentages, and installed LDDs and TDDs.
+
+The dataset contains information about the total number of schools, installed and pending schools, installation percentages, and installed LDDs and TDDs.
 
 - **Original dataset:** 50 records and 8 columns
 - **After preprocessing:** 48 records and 8 columns
 - **Features used for analysis:** 6 numerical columns
-- **Clustering records:** 47 counties, excluding the aggregate `TOTAL` record
+- **Records used for clustering:** 47 counties, excluding the aggregate `TOTAL` record
 
 ## Methodology
 
-### 1. Data Preprocessing
-The dataset was inspected to understand its structure, data types, missing values, and duplicate records. Rows containing missing values were removed, and the `PercentageInstalled` column was converted to a numerical format. Identifier columns were excluded from the analysis, and the selected numerical features were standardized to support the machine learning experiments.
+### 1. Data Inspection
 
-### 2. Anomaly Detection
-Isolation Forest was used to identify records with unusual combinations of school installation features. The results were examined to distinguish potential anomalies from the other records.
+The dataset was examined to understand its structure, numerical summaries, data types, and feature distributions. Histograms were used to explore the distribution of numerical columns.
 
-### 3. Cluster Analysis
-K-Means clustering was used to group counties into three clusters based on six numerical features. The clusters were compared using their average school totals, installation figures, pending schools, and installation percentages.
+### 2. Data Preprocessing
+
+Missing values and duplicate records were checked. The dataset contained 14 missing values and no duplicate records. Rows with missing values were removed, leaving 48 complete records.
+
+The `PercentageInstalled` column was converted from text to a numerical format by removing percentage signs. Six numerical features were selected for analysis, while identifier columns were excluded. StandardScaler was then used to standardize the selected features.
+
+### 3. Anomaly Detection
+
+Isolation Forest was applied to identify records with unusual combinations of school installation features. The results were examined using the detected anomaly labels and a scatter plot.
+
+### 4. Cluster Analysis
+
+K-Means was used to group the 47 individual counties based on the six standardized numerical features. The Elbow Method was used to examine different cluster numbers, and the final analysis used **8 clusters**.
+
+A scatter plot was used to visualize the county groups, while cluster counts and average feature values helped describe their characteristics.
 
 ## Results and Interpretation
 
 ### Anomaly Detection
-The Isolation Forest model identified **7 potential anomalies** and **41 normal records** among the 48 records analyzed. Some flagged records had particularly low installation rates or many pending schools, while others showed unusually high installation figures.
 
-These results highlight records that may deserve further investigation. However, an anomaly is not necessarily a data error, and the results should be interpreted in the context of the original data.
+The Isolation Forest model identified **7 potential anomalies** and **41 normal records** among the 48 records analyzed.
+
+The flagged records included counties with very low installation rates, counties with high installation figures, and the aggregate `TOTAL` record. These records have unusual combinations of features compared with the rest of the dataset and may deserve further investigation.
+
+An anomaly does not necessarily represent an error in the data.
 
 ### Cluster Analysis
-The K-Means model grouped the 47 counties into three clusters:
 
-| Cluster | Counties | Average Installation | General Pattern |
-|---|---:|---:|---|
-| Cluster 0 | 16 | 72.69% | Larger school systems with substantial installation progress |
-| Cluster 1 | 17 | 80.36% | Higher completion rates and fewer pending schools |
-| Cluster 2 | 14 | 33.92% | Lower installation progress and more pending schools relative to installed schools |
+The K-Means model grouped the 47 counties into eight clusters:
 
-Cluster 1 had the highest average installation rate, while Cluster 2 had the lowest. The cluster labels are identifiers, not rankings; the groups are interpreted using their average feature values.
+| Cluster | Number of Counties | Average Installation |
+|---|---:|---:|
+| 0 | 9 | 53.32% |
+| 1 | 8 | 83.58% |
+| 2 | 2 | 63.27% |
+| 3 | 2 | 95.42% |
+| 4 | 6 | 53.51% |
+| 5 | 6 | 13.08% |
+| 6 | 7 | 80.49% |
+| 7 | 7 | 82.19% |
+
+The results show differences in school installation progress across the groups. Cluster 3 had the highest average installation percentage, while Cluster 5 had the lowest. Some clusters also had relatively high numbers of pending schools.
+
+The cluster labels are identifiers rather than rankings. Their characteristics are understood by comparing the average values of the selected features.
 
 ## Conclusion
-This lab applied data preprocessing, Isolation Forest, and K-Means to explore school installation patterns across counties. The anomaly detection experiment highlighted 7 potentially unusual records, while clustering revealed three groups with different installation characteristics. These findings provide a clearer picture of installation progress and areas that may require further investigation, although additional analysis would be needed to explain the reasons behind the observed differences.
+
+This lab applied data preprocessing, Isolation Forest, and K-Means to explore school installation patterns across counties. Anomaly detection highlighted records with unusual school statistics, while cluster analysis revealed groups of counties with different levels of installation progress. Overall, the findings provide a clearer picture of the differences between counties and help identify areas that may need more attention.
 
 ## Tools and Libraries
+
 - Python
-- Pandas and NumPy
+- Pandas
+- NumPy
 - Matplotlib
 - Scikit-learn
 - Kaggle Notebooks
